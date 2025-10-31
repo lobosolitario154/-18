@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Criar Anúncio</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Criar Anúncio</h1>
+    <a href="index.html">Voltar</a>
+  </header>
+
+  <form id="form">
+    <label>WhatsApp (somente números):</label>
+    <input type="text" name="whatsapp" required>
+
+    <label>Legenda:</label>
+    <textarea name="legenda" required></textarea>
+
+    <label>Fotos (até 4):</label>
+    <input type="file" name="fotos" accept="image/*" multiple required>
+
+    <button type="submit">Publicar</button>
+  </form>
+
+  <script>
+    document.getElementById("form").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const whatsapp = form.whatsapp.value;
+      const legenda = form.legenda.value;
+      const files = form.fotos.files;
+
+      if (files.length > 4) {
+        alert("Máximo de 4 fotos.");
+        return;
+      }
+
+      const readerPromises = Array.from(files).map(file => {
+        return new Promise(resolve => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result);
+          reader.readAsDataURL(file);
+        });
+      });
+
+      Promise.all(readerPromises).then(fotos => {
+        const anuncio = { whatsapp, legenda, fotos };
+        const anuncios = JSON.parse(localStorage.getItem("anuncios")) || [];
+        anuncios.push(anuncio);
+        localStorage.setItem("anuncios", JSON.stringify(anuncios));
+        window.location.href = "index.html";
+      });
+    });
+  </script>
+</body>
+</html>
