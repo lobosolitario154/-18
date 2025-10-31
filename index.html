@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Hot Anúncios</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header>
@@ -14,22 +14,6 @@
 
   <main id="anuncios"></main>
 
-  <script>
-    const anuncios = JSON.parse(localStorage.getItem("anuncios")) || [];
-
-    const container = document.getElementById("anuncios");
-    anuncios.forEach(anuncio => {
-      const div = document.createElement("div");
-      div.className = "anuncio";
-      div.innerHTML = `
-        <p>${anuncio.legenda}</p>
-        <div class="fotos">
-          ${anuncio.fotos.map(f => `<img src="${f}" alt="Foto">`).join("")}
-        </div>
-        <a href="https://wa.me/${anuncio.whatsapp}" target="_blank">📱 WhatsApp</a>
-      `;
-      container.appendChild(div);
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
